@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "{{16c84745-afb8-4bf0-86bb-81c211db9bdd}}",
+    "name": "{{MaestroInstall}}",
+    "friendlyName": "{{Maestro Install Task}}",
+    "description": "{{Installs the Maestro CLI}}",
+    "helpMarkDown": "For more information, visit maestro.mobile.dev",
+    "category": "Tool",
+    "author": "{{Sabowsla}}",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "Maestro Install",
+    "inputs": [
+        {
+            "name": "samplestring",
+            "type": "string",
+            "label": "Sample String",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "A sample string"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+    }
