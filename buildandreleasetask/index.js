@@ -18,10 +18,15 @@ const tool = require("azure-pipelines-tool-lib/tool");
 
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        var maestroVersion = task.getInput('version');
-        var currentPlatform = findArchitecture();
-        var downloadUrl = getMaestroSdkUrl(maestroVersion);
-        yield downloadAndInstallSdk(downloadUrl, maestroVersion, currentPlatform);
+        var fromPath = task.getInput('path');
+        if (fromPath) {
+            yield downloadAndInstallCliFromPath(fromPath);
+        } else {
+            var currentPlatform = findArchitecture();
+            var downloadUrl = getMaestroSdkUrl(fromPath);
+            yield downloadAndInstallSdk(downloadUrl, "latest", currentPlatform);
+        }
+
     });
 }
 function findArchitecture() {
@@ -31,7 +36,7 @@ function findArchitecture() {
         return "linux";
     return "windows";
 }
- 
+
 function getMaestroSdkUrl(version) {
     if (version) {
         return 'https://github.com/mobile-dev-inc/maestro/releases/download/cli-$MAESTRO_VERSION/maestro.zip';
@@ -55,6 +60,22 @@ function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
 
     });
 }
+
+function downloadAndInstallCliFromPath(path) {
+    return __awaiter(this, void 0, void 0, function* () {
+
+        console.log(`CLi at path ${path}`);
+        var cliExctractedBundleDir = yield tool.extractZip(sdkBundle);
+        console.log(`Extracted CLI Zip bundle at ${cliExctractedBundleDir}`);
+        console.log('Caching Maestro CLI');
+        tool.cacheDir(cliExctractedBundleDir, 'Maestro', 'custom', arch);
+        var maestroCliPath = cliExctractedBundleDir + '/maestro/bin';
+        console.log(`Adding ${maestroCliPath} PATH environment `);
+        task.prependPath(maestroCliPath);
+
+    });
+}
+
 run().catch(error => {
     task.setResult(task.TaskResult.Failed, error);
 });

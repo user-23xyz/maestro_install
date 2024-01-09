@@ -8,16 +8,16 @@
     "category": "Test",
     "author": "Sabowsla",
     "version": {
-        "Major": 11,
+        "Major": 12,
         "Minor": 0,
-        "Patch":3
+        "Patch":5
     },
     "instanceNameFormat": "Maestro Install",
     "inputs": [
         {
             "name": "version",
             "type": "string",
-            "label": "Maestro version",
+            "label": "Maestro zip file",
             "required": false,
             "helpMarkDown": "The maestro cli version to download."
         }
