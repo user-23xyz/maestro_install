@@ -5,7 +5,7 @@
     "friendlyName": "Maestro Install Task",
     "description": "Installs the Maestro CLI",
     "helpMarkDown": "For more information, visit maestro.mobile.dev",
-    "category": "Azure Pipelines",
+    "category": "Test",
     "author": "Sabowsla",
     "version": {
         "Major": 0,

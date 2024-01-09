@@ -1,20 +1,28 @@
 {
     "manifestVersion": 1,
-    "id": "build-release-task",
+    "id": "MaestroCLIInstallerbySabowsla",
     "name": "Maestro CLI Installer by Sabowsla",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "publisher": "Sabowsla",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
-    ],    
+    ],
     "description": "Tools for installing the Maestro CLI on a build agent.",
     "categories": [
         "Azure Pipelines"
     ],
+    "tags": [
+        "maestrocli",
+        "maestrocliinstaller",
+        "test",
+        "Test task",
+        "Tool task",
+        "Install task"
+    ],
     "icons": {
-        "default": "images/extension-icon.png"        
+        "default": "images/extension-icon.png"
     },
     "files": [
         {

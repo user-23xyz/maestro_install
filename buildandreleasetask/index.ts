@@ -9,7 +9,7 @@ async function run() {
         var maestroVersion = task.getInput('version');
         var currentPlatform = await getCurrentPlatform();
         var downloadUrl = await getMaestroSdkUrl(maestroVersion);
-        await downloadAndInstallSdk(downloadUrl, maestroVersion ?? 'latest', currentPlatform);
+        await downloadAndInstallSdk(downloadUrl, maestroVersion, currentPlatform);
     }
     catch (err) {
         task.setResult(task.TaskResult.Failed, String(err));
@@ -43,14 +43,14 @@ async function getCurrentPlatform(): Promise<string> {
 
 
 
-async function downloadAndInstallSdk(latestSdkDownloadUrl: string, version: string, arch: string) {
+async function downloadAndInstallSdk(latestSdkDownloadUrl: string, version: string | undefined, arch: string) {
     console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
     var sdkBundle = await tool.downloadTool(latestSdkDownloadUrl);
     console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
     var sdkExtractedBundleDir = await tool.extractZip(sdkBundle);
     console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
     console.log('Caching Maestro CLI');
-    tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version, arch);
+    tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version ? version : 'latest' , arch);
     var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
     console.log(`Adding ${maestroCliPath} PATH environment `);
     task.prependPath(maestroCliPath);
