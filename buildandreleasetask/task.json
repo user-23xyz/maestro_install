@@ -15,12 +15,11 @@
     "instanceNameFormat": "Maestro Install",
     "inputs": [
         {
-            "name": "samplestring",
+            "name": "version",
             "type": "string",
-            "label": "Sample String",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "A sample string"
+            "label": "Maestro version",
+            "required": false,
+            "helpMarkDown": "The maestro cli version to download."
         }
     ],
     "execution": {
