@@ -15,11 +15,11 @@ const request = require("request-promise");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            var flutterChannel = task.getInput('channel', true);
-            var flutterVersion = task.getInput('version');
-            var currentPlatform = yield getCurrentPlatform();
-            var latestSdkInformation = yield findSdkInformation(flutterChannel, currentPlatform, flutterVersion);
-            yield downloadAndInstallSdk(latestSdkInformation.downloadUrl, latestSdkInformation.version, currentPlatform);
+
+            var maestroVersion = task.getInput('version');
+            var currentPlatform = yield  getCurrentPlatform();
+            var downloadUrl = getMaestroSdkUrl(maestroVersion);
+            yield downloadAndInstallSdk(downloadUrl, maestroVersion ?? 'latest', currentPlatform);
         }
         catch (err) {
             task.setResult(task.TaskResult.Failed, err.message);
@@ -41,48 +41,25 @@ function getCurrentPlatform() {
         }
     });
 }
-function findSdkInformation(channel, arch, version) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var releasesUrl = `https://storage.googleapis.com/flutter_infra_releases/releases/releases_${arch}.json`;
-        var body = yield request.get(releasesUrl);
-        var json = JSON.parse(body);
-        var currentHash = json.current_release[channel];
-        var current = json.releases.find((item) => item.hash === currentHash);
-        json.releases.forEach((element) => {
-            console.log("Found: " + element.archive);
-        });
-        var flutterVersion = version != null ? version : current.version.substring(1);
-        return {
-            downloadUrl: json.base_url + '/' + current.archive,
-            version: channel + '-' + flutterVersion
-        };
-    });
+function getMaestroSdkUrl(version) {
+    if (version) {
+        return 'https://github.com/mobile-dev-inc/maestro/releases/download/cli-$MAESTRO_VERSION/maestro.zip';
+    } else {
+        return 'https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip';
+    }
 }
 function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(`Downloading latest sdk from ${latestSdkDownloadUrl}`);
+        console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
         var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
-        console.log(`Downloaded SDK zip bundle at ${latestSdkDownloadUrl}`);
-        var sdkExtractedBundleDir;
-        if (latestSdkDownloadUrl.includes('tar.xz')) {
-            sdkExtractedBundleDir = yield tool.extractTar(sdkBundle);
-            console.log(`Extracted SDK Tar bundle at ${sdkExtractedBundleDir}`);
-        }
-        else {
-            sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
-            console.log(`Extracted SDK Zip bundle at ${sdkExtractedBundleDir}`);
-        }
-        console.log('Caching Flutter sdk');
-        tool.cacheDir(sdkExtractedBundleDir, 'Flutter', version, arch);
-        var flutterSdkPath = sdkExtractedBundleDir + '/flutter/bin';
-        var dartSdkPath = flutterSdkPath + '/cache/dart-sdk/bin';
-        var pubCachePath = process.env.HOME + '/.pub-cache/bin';
-        console.log(`Adding ${flutterSdkPath} PATH environment `);
-        task.prependPath(flutterSdkPath);
-        console.log(`Adding ${dartSdkPath} PATH environment `);
-        task.prependPath(dartSdkPath);
-        console.log(`Adding ${pubCachePath} PATH environment `);
-        task.prependPath(pubCachePath);
+        console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
+        var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
+        console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
+        console.log('Caching Maestro CLI');
+        tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version, arch);
+        var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
+        console.log(`Adding ${maestroCliPath} PATH environment `);
+        task.prependPath(maestroCliPath);
     });
 }
 run();
