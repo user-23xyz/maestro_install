@@ -1,6 +1,6 @@
 {
   "name": "maestro-cli-installer",
-  "version": "7.0.9",
+  "version": "11.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "author": "Sabowsla",
   "license": "MIT",
   "dependencies": {
-    "azure-pipelines-tool-lib": "*",
-    "request-promise": "*",
-    "request": "*"
-
+    "azure-pipelines-task-lib": "^5.0.1-preview.0",
+    "azure-pipelines-tool-lib": "^2.0.7",
+    "request": "*",
+    "request-promise": "*"
   },
   "devDependencies": {
-    "@types/node": "^20.10.6"
+    "@types/node": "^13.13.5"
   }
 }

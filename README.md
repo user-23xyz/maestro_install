@@ -1,0 +1,1 @@
+This tool install the maestro cli from maestro.mobile.dev

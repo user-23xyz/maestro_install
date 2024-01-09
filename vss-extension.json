@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "MaestroCLIInstallerbySabowsla",
     "name": "Maestro CLI Installer by Sabowsla",
-    "version": "7.0.9",
+    "version": "11.0.3",
     "publisher": "Sabowsla",
     "public": true,
     "targets": [
@@ -22,6 +22,14 @@
         "Tool task",
         "Install task"
     ],
+    "content": {
+        "details": {
+            "path": "README.md"
+        },
+        "license": {
+            "path": "LICENSE.md"
+        }
+    },
     "icons": {
         "default": "images/extension-icon.png"
     },

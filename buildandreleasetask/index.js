@@ -42,15 +42,15 @@ function getMaestroSdkUrl(version) {
 function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
 
-        console.debug(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
+        console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
         var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
-        console.debug(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
+        console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
         var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
-        console.debug(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
-        console.debug('Caching Maestro CLI');
+        console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
+        console.log('Caching Maestro CLI');
         tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version ? version : 'latest', arch);
         var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
-        console.debug(`Adding ${maestroCliPath} PATH environment `);
+        console.log(`Adding ${maestroCliPath} PATH environment `);
         task.prependPath(maestroCliPath);
 
     });
