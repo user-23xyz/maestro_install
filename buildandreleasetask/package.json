@@ -1,6 +1,6 @@
 {
   "name": "buildandreleasetask",
-  "version": "1.0.0",
+  "version": "2.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,11 @@
   "dependencies": {
     "azure-pipelines-task-lib": "^5.0.1-preview.0",
     "azure-pipelines-tool-lib": "^2.0.7",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "@types/jest": "^24.0.16",
+    "@types/request-promise": "^4.1.44",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
