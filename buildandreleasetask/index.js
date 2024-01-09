@@ -18,12 +18,13 @@ const tool = require("azure-pipelines-tool-lib/tool");
 
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        var fromPath = task.getInput('path');
-        if (fromPath) {
-            yield downloadAndInstallCliFromPath(fromPath);
+        var zipFile = task.getInput('zipFile');
+        var path = task.getInput('path');
+        if (zipFile) {
+            yield installCliFromZip(zipFile);
+        } else if (path) {
+            yield installCliFromPath(path);
         } else {
-
-
             yield downloadAndInstallSdk();
         }
 
@@ -56,10 +57,19 @@ function downloadAndInstallSdk() {
     });
 }
 
-function downloadAndInstallCliFromPath(path) {
+
+function installCliFromPath(maestroPath) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(`CLi at path ${path}`);
-        var cliDir = yield tool.extractZip(path);
+        console.log(`Adding ${maestroPath} PATH environment `);
+        task.prependPath(maestroPath);
+    });
+}
+
+
+function installCliFromZip(zipFile) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log(`CLi at path ${zipFile}`);
+        var cliDir = yield tool.extractZip(zipFile);
         console.log(`Extracted CLI Zip bundle at ${cliDir}`);
         console.log('Caching Maestro CLI');
         var arch = findArchitecture();

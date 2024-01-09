@@ -8,18 +8,25 @@
     "category": "Test",
     "author": "Sabowsla",
     "version": {
-        "Major": 15,
+        "Major": 17,
         "Minor": 0,
-        "Patch":10
+        "Patch": 12
     },
     "instanceNameFormat": "Maestro Install",
     "inputs": [
         {
-            "name": "path",
+            "name": "zipFile",
             "type": "string",
             "label": "Maestro zip file",
             "required": false,
             "helpMarkDown": "The maestro cli zip already available on your agent machine."
+        },
+        {
+            "name": "path",
+            "type": "string",
+            "label": "Maestro bin file",
+            "required": false,
+            "helpMarkDown": "The maestro bin already available on your agent machine."
         }
     ],
     "execution": {
@@ -27,4 +34,4 @@
             "target": "index.js"
         }
     }
-    }
+}
