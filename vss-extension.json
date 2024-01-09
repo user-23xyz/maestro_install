@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "MaestroCLIInstallerbySabowsla",
     "name": "Maestro CLI Installer by Sabowsla",
-    "version": "4.0.5",
+    "version": "5.0.7",
     "publisher": "Sabowsla",
     "targets": [
         {

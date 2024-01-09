@@ -1,6 +1,6 @@
 {
   "name": "maestro-cli-installer",
-  "version": "3.0.1",
+  "version": "5.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {

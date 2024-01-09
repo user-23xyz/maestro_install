@@ -17,9 +17,9 @@ function run() {
         try {
 
             var maestroVersion = task.getInput('version');
-            var currentPlatform = yield  getCurrentPlatform();
+            var currentPlatform = yield getCurrentPlatform();
             var downloadUrl = getMaestroSdkUrl(maestroVersion);
-            yield downloadAndInstallSdk(downloadUrl, maestroVersion , currentPlatform);
+            yield downloadAndInstallSdk(downloadUrl, maestroVersion, currentPlatform);
         }
         catch (err) {
             task.setResult(task.TaskResult.Failed, err.message);
@@ -50,16 +50,20 @@ function getMaestroSdkUrl(version) {
 }
 function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
-        var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
-        console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
-        var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
-        console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
-        console.log('Caching Maestro CLI');
-        tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version? version : 'latest', arch);
-        var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
-        console.log(`Adding ${maestroCliPath} PATH environment `);
-        task.prependPath(maestroCliPath);
+        try {
+            console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
+            var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
+            console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
+            var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
+            console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
+            console.log('Caching Maestro CLI');
+            tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version ? version : 'latest', arch);
+            var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
+            console.log(`Adding ${maestroCliPath} PATH environment `);
+            task.prependPath(maestroCliPath);
+        } catch (error) {
+            console.log("Installing the CLI has errored " + error);
+        }
     });
 }
 run();
