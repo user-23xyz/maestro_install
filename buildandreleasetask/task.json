@@ -8,18 +8,18 @@
     "category": "Test",
     "author": "Sabowsla",
     "version": {
-        "Major": 12,
+        "Major": 14,
         "Minor": 0,
-        "Patch":5
+        "Patch":9
     },
     "instanceNameFormat": "Maestro Install",
     "inputs": [
         {
-            "name": "version",
+            "name": "path",
             "type": "string",
             "label": "Maestro zip file",
             "required": false,
-            "helpMarkDown": "The maestro cli version to download."
+            "helpMarkDown": "The maestro cli zip already available on your agent machine."
         }
     ],
     "execution": {

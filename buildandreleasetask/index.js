@@ -63,9 +63,8 @@ function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
 
 function downloadAndInstallCliFromPath(path) {
     return __awaiter(this, void 0, void 0, function* () {
-
         console.log(`CLi at path ${path}`);
-        var cliExctractedBundleDir = yield tool.extractZip(sdkBundle);
+        var cliExctractedBundleDir = yield tool.extractZip(path);
         console.log(`Extracted CLI Zip bundle at ${cliExctractedBundleDir}`);
         console.log('Caching Maestro CLI');
         tool.cacheDir(cliExctractedBundleDir, 'Maestro', 'custom', arch);
