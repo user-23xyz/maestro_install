@@ -1,12 +1,12 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "{{16c84745-afb8-4bf0-86bb-81c211db9bdd}}",
-    "name": "{{MaestroInstall}}",
-    "friendlyName": "{{Maestro Install Task}}",
-    "description": "{{Installs the Maestro CLI}}",
+    "id": "ca5a3544-0141-4fbc-9b8e-67abb076db61",
+    "name": "MaestroInstall",
+    "friendlyName": "Maestro Install Task",
+    "description": "Installs the Maestro CLI",
     "helpMarkDown": "For more information, visit maestro.mobile.dev",
-    "category": "Tool",
-    "author": "{{Sabowsla}}",
+    "category": "Azure Pipelines",
+    "author": "Sabowsla",
     "version": {
         "Major": 0,
         "Minor": 1,
