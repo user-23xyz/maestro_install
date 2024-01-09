@@ -22,9 +22,9 @@ function run() {
         if (fromPath) {
             yield downloadAndInstallCliFromPath(fromPath);
         } else {
-            var currentPlatform = findArchitecture();
-            var downloadUrl = getMaestroSdkUrl(fromPath);
-            yield downloadAndInstallSdk(downloadUrl, "latest", currentPlatform);
+
+
+            yield downloadAndInstallSdk();
         }
 
     });
@@ -37,24 +37,19 @@ function findArchitecture() {
     return "windows";
 }
 
-function getMaestroSdkUrl(version) {
-    if (version) {
-        return 'https://github.com/mobile-dev-inc/maestro/releases/download/cli-$MAESTRO_VERSION/maestro.zip';
-    } else {
-        return 'https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip';
-    }
-}
-function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
-    return __awaiter(this, void 0, void 0, function* () {
 
-        console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
-        var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
-        console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
-        var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
-        console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
+function downloadAndInstallSdk() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var dUrl = 'https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip';
+        console.log(`Downloading latest CLI from ${dUrl}`);
+        var cliZip = yield tool.downloadTool(dUrl);
+        console.log(`Downloaded CLI zip bundle at ${cliZip}`);
+        var cliDir = yield tool.extractZip(cliZip);
+        console.log(`Extracted CLI Zip bundle at ${cliDir}`);
         console.log('Caching Maestro CLI');
-        tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version ? version : 'latest', arch);
-        var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
+        var arch = findArchitecture();
+        tool.cacheDir(cliDir, 'Maestro', 'latest', arch);
+        var maestroCliPath = cliDir + '/maestro/bin';
         console.log(`Adding ${maestroCliPath} PATH environment `);
         task.prependPath(maestroCliPath);
 
@@ -64,15 +59,14 @@ function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
 function downloadAndInstallCliFromPath(path) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(`CLi at path ${path}`);
-        var cliExctractedBundleDir = yield tool.extractZip(path);
-        console.log(`Extracted CLI Zip bundle at ${cliExctractedBundleDir}`);
+        var cliDir = yield tool.extractZip(path);
+        console.log(`Extracted CLI Zip bundle at ${cliDir}`);
         console.log('Caching Maestro CLI');
         var arch = findArchitecture();
-        tool.cacheDir(cliExctractedBundleDir, 'Maestro', 'custom', arch);
-        var maestroCliPath = cliExctractedBundleDir + '/maestro/bin';
-        console.log(`Adding ${maestroCliPath} PATH environment `);
-        task.prependPath(maestroCliPath);
-
+        tool.cacheDir(cliDir, 'Maestro', 'custom', arch);
+        var maestroPath = cliDir + '/maestro/bin';
+        console.log(`Adding ${maestroPath} PATH environment `);
+        task.prependPath(maestroPath);
     });
 }
 
