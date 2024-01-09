@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "MaestroCLIInstallerbySabowsla",
     "name": "Maestro CLI Installer by Sabowsla",
-    "version": "3.0.0",
+    "version": "4.0.5",
     "publisher": "Sabowsla",
     "targets": [
         {
@@ -31,13 +31,13 @@
     ],
     "contributions": [
         {
-            "id": "custom-maestro-cli-installer",
+            "id": "custom-build-release-task",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "maestro-cli-installer"
+                "name": "buildandreleasetask"
             }
         }
     ]
