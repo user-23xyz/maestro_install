@@ -67,6 +67,7 @@ function downloadAndInstallCliFromPath(path) {
         var cliExctractedBundleDir = yield tool.extractZip(path);
         console.log(`Extracted CLI Zip bundle at ${cliExctractedBundleDir}`);
         console.log('Caching Maestro CLI');
+        var arch = findArchitecture();
         tool.cacheDir(cliExctractedBundleDir, 'Maestro', 'custom', arch);
         var maestroCliPath = cliExctractedBundleDir + '/maestro/bin';
         console.log(`Adding ${maestroCliPath} PATH environment `);

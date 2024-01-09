@@ -8,9 +8,9 @@
     "category": "Test",
     "author": "Sabowsla",
     "version": {
-        "Major": 14,
+        "Major": 15,
         "Minor": 0,
-        "Patch":9
+        "Patch":10
     },
     "instanceNameFormat": "Maestro Install",
     "inputs": [
