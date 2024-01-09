@@ -1,27 +1,21 @@
 {
   "name": "maestro-cli-installer",
-  "version": "5.0.7",
+  "version": "7.0.9",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Sabowsla",
+  "license": "MIT",
   "dependencies": {
-    "azure-pipelines-task-lib": "^4.7.0",
     "azure-pipelines-tool-lib": "*",
-    "typescript": "^5.3.3",
-    "@types/jest": "^24.0.16",
-    "@types/request-promise": "^4.1.44",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise": "*",
+    "request": "*"
+
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^20.10.6",
-    "@types/q": "^1.5.8",
-    "sync-request": "^6.1.0"
+    "@types/node": "^20.10.6"
   }
 }

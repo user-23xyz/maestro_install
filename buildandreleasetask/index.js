@@ -8,39 +8,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const task = require("azure-pipelines-task-lib/task");
+Object.defineProperty(exports, "__esModule", { value: true });
+
+const os = require("os");
+const task = require("azure-pipelines-task-lib");
 const tool = require("azure-pipelines-tool-lib/tool");
-require("os");
-const request = require("request-promise");
+
+
+
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-
-            var maestroVersion = task.getInput('version');
-            var currentPlatform = yield getCurrentPlatform();
-            var downloadUrl = getMaestroSdkUrl(maestroVersion);
-            yield downloadAndInstallSdk(downloadUrl, maestroVersion, currentPlatform);
-        }
-        catch (err) {
-            task.setResult(task.TaskResult.Failed, err.message);
-        }
+        var maestroVersion = task.getInput('version');
+        var currentPlatform = findArchitecture();
+        var downloadUrl = getMaestroSdkUrl(maestroVersion);
+        yield downloadAndInstallSdk(downloadUrl, maestroVersion, currentPlatform);
     });
 }
-function getCurrentPlatform() {
-    return __awaiter(this, void 0, void 0, function* () {
-        var platform = yield task.getPlatform();
-        switch (platform) {
-            case task.Platform.Windows:
-                return 'windows';
-            case task.Platform.Linux:
-                return 'linux';
-            case task.Platform.MacOS:
-                return 'macos';
-            default:
-                throw Error('Unsupported platform');
-        }
-    });
+function findArchitecture() {
+    if (os.platform() === 'darwin')
+        return "macos";
+    else if (os.platform() === 'linux')
+        return "linux";
+    return "windows";
 }
+ 
 function getMaestroSdkUrl(version) {
     if (version) {
         return 'https://github.com/mobile-dev-inc/maestro/releases/download/cli-$MAESTRO_VERSION/maestro.zip';
@@ -50,20 +41,20 @@ function getMaestroSdkUrl(version) {
 }
 function downloadAndInstallSdk(latestSdkDownloadUrl, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            console.log(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
-            var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
-            console.log(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
-            var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
-            console.log(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
-            console.log('Caching Maestro CLI');
-            tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version ? version : 'latest', arch);
-            var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
-            console.log(`Adding ${maestroCliPath} PATH environment `);
-            task.prependPath(maestroCliPath);
-        } catch (error) {
-            console.log("Installing the CLI has errored " + error);
-        }
+
+        console.debug(`Downloading latest CLI from ${latestSdkDownloadUrl}`);
+        var sdkBundle = yield tool.downloadTool(latestSdkDownloadUrl);
+        console.debug(`Downloaded CLI zip bundle at ${latestSdkDownloadUrl}`);
+        var sdkExtractedBundleDir = yield tool.extractZip(sdkBundle);
+        console.debug(`Extracted CLI Zip bundle at ${sdkExtractedBundleDir}`);
+        console.debug('Caching Maestro CLI');
+        tool.cacheDir(sdkExtractedBundleDir, 'Maestro', version ? version : 'latest', arch);
+        var maestroCliPath = sdkExtractedBundleDir + '/maestro/bin';
+        console.debug(`Adding ${maestroCliPath} PATH environment `);
+        task.prependPath(maestroCliPath);
+
     });
 }
-run();
+run().catch(error => {
+    task.setResult(task.TaskResult.Failed, error);
+});
