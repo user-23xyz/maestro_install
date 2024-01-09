@@ -1,6 +1,6 @@
 {
-  "name": "buildandreleasetask",
-  "version": "2.0.5",
+  "name": "maestro-cli-installer",
+  "version": "3.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
